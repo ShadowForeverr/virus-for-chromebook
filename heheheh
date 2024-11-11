@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shortcut Capture</title>
+</head>
+<body>
+    <p id="shortcutStatus">Press Ctrl + Shift + Q + Q</p>
+
+    <script>
+        let keysPressed = [];
+
+        document.addEventListener("keydown", function(event) {
+            keysPressed.push(event.key);
+            if (keysPressed.length > 4) {
+                keysPressed.shift();
+            }
+
+            if (keysPressed.join("") === "ControlShiftqq") {
+                document.getElementById("shortcutStatus").textContent = "Shortcut Captured: Ctrl + Shift + Q + Q";
+                keysPressed = [];
+            }
+        });
+    </script>
+</body>
+</html>
