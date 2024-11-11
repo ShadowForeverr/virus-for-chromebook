@@ -4,12 +4,22 @@
     <title>Shortcut Capture</title>
 </head>
 <body>
+    <button id="startCapture">Start Shortcut Capture</button>
     <p id="shortcutStatus">Press Ctrl + Shift + Q + Q</p>
 
     <script>
         let keysPressed = [];
+        let capturing = false;
 
-        document.addEventListener("keydown", function(event) {
+        document.getElementById("startCapture").addEventListener("click", function() {
+            if (!capturing) {
+                capturing = true;
+                document.getElementById("shortcutStatus").textContent = "Capture mode activated. Press Ctrl + Shift + Q + Q";
+                document.addEventListener("keydown", captureShortcut);
+            }
+        });
+
+        function captureShortcut(event) {
             keysPressed.push(event.key);
             if (keysPressed.length > 4) {
                 keysPressed.shift();
@@ -18,8 +28,10 @@
             if (keysPressed.join("") === "ControlShiftqq") {
                 document.getElementById("shortcutStatus").textContent = "Shortcut Captured: Ctrl + Shift + Q + Q";
                 keysPressed = [];
+                capturing = false;
+                document.removeEventListener("keydown", captureShortcut);
             }
-        });
+        }
     </script>
 </body>
 </html>
